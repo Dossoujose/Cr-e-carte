@@ -183,15 +183,35 @@
         flex-direction: column;
         height: auto;
         width: 100%;
+        padding: 15px;
+      }
+
+      .left-section {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 15px;
+      }
+
+      .left-section img {
+        width: 100px;
+        height: 100px;
       }
 
       .club-logo, .qr-code {
+        width: 60px;
+        height: auto;
         position: static;
-        margin-top: 10px;
+        margin-top: 15px;
+        align-self: center;
       }
 
       .club-name {
         font-size: 18px;
+      }
+
+      .right-section .info b {
+        display: block;
+        margin-bottom: 5px;
       }
     }
   </style>
@@ -252,25 +272,25 @@
     const clubs = {
       real: {
         name: "REAL MADRID C.F.",
-        logo: "https://upload.wikimedia.org/wikipedia/en/5/56/Real_Madrid_CF.svg",
+        logo: "https://upload.wikimedia.org/wikipedia/fr/thumb/6/6e/Real_Madrid_CF.svg/800px-Real_Madrid_CF.svg.png",
         qr: "https://api.qrserver.com/v1/create-qr-code/?data=https://www.realmadrid.com&size=100x100",
         color: "#ffd700",
       },
       barca: {
         name: "FC BARCELONA",
-        logo: "https://upload.wikimedia.org/wikipedia/en/4/47/FC_Barcelona_%28crest%29.svg",
+        logo: "https://upload.wikimedia.org/wikipedia/fr/thumb/8/89/Logo_FC_Barcelone.svg/800px-Logo_FC_Barcelone.svg.png",
         qr: "https://api.qrserver.com/v1/create-qr-code/?data=https://www.fcbarcelona.com&size=100x100",
         color: "#A50044",
       },
       city: {
         name: "MANCHESTER CITY",
-        logo: "https://upload.wikimedia.org/wikipedia/en/e/eb/Manchester_City_FC_badge.svg",
+        logo: "https://upload.wikimedia.org/wikipedia/fr/thumb/c/c7/Logo_Manchester_City_2016.svg/800px-Logo_Manchester_City_2016.svg.png",
         qr: "https://api.qrserver.com/v1/create-qr-code/?data=https://www.mancity.com&size=100x100",
         color: "#6CABDD",
       },
       united: {
         name: "MANCHESTER UNITED",
-        logo: "https://upload.wikimedia.org/wikipedia/en/7/7a/Manchester_United_FC_crest.svg",
+        logo: "https://upload.wikimedia.org/wikipedia/fr/thumb/7/7a/Manchester_United_FC_crest.svg/800px-Manchester_United_FC_crest.svg.png",
         qr: "https://api.qrserver.com/v1/create-qr-code/?data=https://www.manutd.com&size=100x100",
         color: "#DA291C",
       },
@@ -308,12 +328,23 @@
 
     document.getElementById("downloadBtn").addEventListener("click", function () {
       const card = document.getElementById("cardPreview");
-      html2canvas(card).then(function (canvas) {
-        const link = document.createElement("a");
-        link.download = "carte_supporter.png";
-        link.href = canvas.toDataURL("image/png");
-        link.click();
-      });
+
+      // Scroll en haut pour éviter les bugs d’affichage partiel
+      window.scrollTo(0, 0);
+
+      // Petit délai pour s'assurer que tout est bien chargé
+      setTimeout(() => {
+        html2canvas(card, {
+          useCORS: true,
+          allowTaint: false,
+          scale: 2, // meilleure qualité sur mobile
+        }).then(function (canvas) {
+          const link = document.createElement("a");
+          link.download = "carte_supporter.png";
+          link.href = canvas.toDataURL("image/png");
+          link.click();
+        });
+      }, 500);
     });
   </script>
 </body>
