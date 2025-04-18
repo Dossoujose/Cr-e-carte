@@ -127,8 +127,7 @@
     .club-name {
       font-size: 22px;
       font-weight: bold;
-      color: #002f6c;
-      background: #ffd700;
+      color: #ffffff;
       padding: 10px;
       border-radius: 10px;
       text-align: center;
@@ -243,8 +242,6 @@
     <select id="club">
       <option value="real">Real Madrid</option>
       <option value="barca">FC Barcelona</option>
-      <option value="city">Man City</option>
-      <option value="united">Man United</option>
     </select>
 
     <button type="submit">Générer la carte</button>
@@ -272,28 +269,16 @@
     const clubs = {
       real: {
         name: "REAL MADRID C.F.",
-        logo: "https://upload.wikimedia.org/wikipedia/fr/thumb/6/6e/Real_Madrid_CF.svg/800px-Real_Madrid_CF.svg.png",
+        logo: "image/real_madrid_logo.png",  // Assurez-vous d'avoir le logo dans le dossier 'image'
         qr: "https://api.qrserver.com/v1/create-qr-code/?data=https://www.realmadrid.com&size=100x100",
-        color: "#ffd700",
+        color: "#003B5C", // Bleu foncé de Madrid
       },
       barca: {
         name: "FC BARCELONA",
-        logo: "https://upload.wikimedia.org/wikipedia/fr/thumb/8/89/Logo_FC_Barcelone.svg/800px-Logo_FC_Barcelone.svg.png",
+        logo: "image/fc_barcelona_logo.png",  // Assurez-vous d'avoir le logo dans le dossier 'image'
         qr: "https://api.qrserver.com/v1/create-qr-code/?data=https://www.fcbarcelona.com&size=100x100",
-        color: "#A50044",
-      },
-      city: {
-        name: "MANCHESTER CITY",
-        logo: "https://upload.wikimedia.org/wikipedia/fr/thumb/c/c7/Logo_Manchester_City_2016.svg/800px-Logo_Manchester_City_2016.svg.png",
-        qr: "https://api.qrserver.com/v1/create-qr-code/?data=https://www.mancity.com&size=100x100",
-        color: "#6CABDD",
-      },
-      united: {
-        name: "MANCHESTER UNITED",
-        logo: "https://upload.wikimedia.org/wikipedia/fr/thumb/7/7a/Manchester_United_FC_crest.svg/800px-Manchester_United_FC_crest.svg.png",
-        qr: "https://api.qrserver.com/v1/create-qr-code/?data=https://www.manutd.com&size=100x100",
-        color: "#DA291C",
-      },
+        color: "#A50044",  // Couleur bleu et rouge de Barcelone
+      }
     };
 
     document.getElementById("cardForm").addEventListener("submit", function(e) {
@@ -329,15 +314,14 @@
     document.getElementById("downloadBtn").addEventListener("click", function () {
       const card = document.getElementById("cardPreview");
 
-      // Scroll en haut pour éviter les bugs d’affichage partiel
       window.scrollTo(0, 0);
 
-      // Petit délai pour s'assurer que tout est bien chargé
       setTimeout(() => {
         html2canvas(card, {
           useCORS: true,
           allowTaint: false,
-          scale: 2, // meilleure qualité sur mobile
+          scale: 2,
+          logging: false,
         }).then(function (canvas) {
           const link = document.createElement("a");
           link.download = "carte_supporter.png";
